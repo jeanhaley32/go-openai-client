@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/jeanhaley/go-openai-client"
+	"github.com/jeanhaley32/go-openai-client"
 )
 
 func main() {

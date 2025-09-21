@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jeanhaley/go-openai-client"
+	"github.com/jeanhaley32/go-openai-client"
 )
 
 // ConversationID represents a unique identifier for a conversation
