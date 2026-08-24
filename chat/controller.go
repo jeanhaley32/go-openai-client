@@ -166,14 +166,21 @@ func (c *Controller) SendMessage(ctx context.Context, request ChatRequest) (*Cha
 		model = c.defaultModel
 	}
 
+	// When a request omits MaxTokens/Temperature, fall back to the controller
+	// defaults by copying the value into a request-local variable first. Taking
+	// the address of c.maxTokens/c.temperature directly would hand every
+	// default-using request a pointer into shared Controller state — a data
+	// race under concurrent SendMessage calls on a type built for concurrent use.
 	maxTokens := request.MaxTokens
 	if maxTokens == nil {
-		maxTokens = &c.maxTokens
+		mt := c.maxTokens
+		maxTokens = &mt
 	}
 
 	temperature := request.Temperature
 	if temperature == nil {
-		temperature = &c.temperature
+		t := c.temperature
+		temperature = &t
 	}
 
 	// Update conversation and create AI request atomically
